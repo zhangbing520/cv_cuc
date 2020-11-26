@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // fetch('http://localhost:3000/books?id=123', {
+        //     method: 'get'
+        // })
+        //     .then(function(data){
+        //         // text()方法属于fetchAPI的一部分，它返回一个Promise实例对象，用于获取后台返回的数据
+        //         return data.text();
+        //      }).then(function(data){
+        //   //   在这个then里面我们能拿到最终的数据  
+        //   console.log(data);
+        // });
+
+        // fetch('http://localhost:3000/books/123', {
+        //     method: 'delete'
+        // })
+        //     .then(function(data){
+        //         // text()方法属于fetchAPI的一部分，它返回一个Promise实例对象，用于获取后台返回的数据
+        //         return data.text();
+        //      }).then(function(data){
+        //     // 在这个then里面我们能拿到最终的数据  
+        //   console.log(data);
+        // });
+
+        // #3 POST请求传参
+        fetch('http://localhost:3000/books/123', {
+                method: 'put',
+                body: JSON.stringify({
+                    uname: '张三',
+                    pwd: '789'
+                }),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(function(data) {
+                return data.text();
+            }).then(function(data) {
+                console.log(data)
+            });
+
+
+    </script>
+</body>
+</html>

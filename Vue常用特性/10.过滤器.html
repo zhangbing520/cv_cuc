@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <input type="text" v-model='msg'>
+        <!-- 过滤器级联的用法 -->
+        <div>{{ msg | upper }}</div>
+        <div>{{ msg | upper | lower }}</div>
+        <!-- 属性绑定也可以使用过滤器 -->
+        <div v-bind:abc='msg | upper | reverseString'>测试数据</div>
+    </div>
+    <script src="./js/vue.js"></script>
+    <script>
+        // 过滤器的作用：格式化数据（比如将字符串格式化为首字母大写，将日期格式化为指定的格式等）
+        // 自定义过滤器：(全局过滤器)
+        // Vue.filter('过滤器名称', function(){
+        //     // 过滤器业务逻辑
+        // })
+
+        Vue.filter('upper', function (val) {
+            return val.charAt(0).toUpperCase() + val.slice(1);
+        });
+
+        Vue.filter('lower', function (val) {
+            return val.charAt(0).toLowerCase() + val.slice(1);
+        });
+
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                msg: '',
+            },
+            // 定义局部过滤器（只能在本组件内可以使用）
+            filters: {
+                reverseString: function(val){
+                     return val.split('').reverse().join('');
+                }
+            }
+
+        })
+    </script>
+</body>
+</html>

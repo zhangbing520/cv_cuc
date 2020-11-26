@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <div>{{ num }}</div>
+        <button v-on:click='num++'>点击</button>
+        <button @click='num++'>点击1</button>
+        <button @click='handle'>点击2</button>
+        <button @click='handle()'>点击3</button>
+    </div>
+
+    <script type="text/javascript" src="./js/vue.js"></script>
+
+    <script>
+        // Vue的基本使用步骤：
+        // 1. 需要提供标签用于填充数据
+        // 2. 引入 vue.js库文件
+        // 3. 可以使用vue的语法做功能了
+        // 4. 把vue提供的数据填充到标签里
+
+        var vm = new Vue({
+            // 元素的挂载位置
+            el: '#app',
+            // 模型数据（只是一个对象）
+            data: {
+                msg:'Hello Vue',
+                num: 0
+            },
+            methods: {
+                handle: function () {
+                    // 这里的this是Vue的实例对象
+                    console.log(this === vm)
+                    this.num++;
+                }
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // 基于Promise发送Ajax请求
+
+        function queryData(url) {
+            var p = new Promise(function(resolve, reject){
+                var xhr = new XMLHttpRequest();
+                xhr.onreadystatechange = function(){
+                    if(xhr.readyState != 4) return;
+                    if(xhr.readyState == 4 && xhr.status == 200) {
+                        // 处理正常的情况
+                        resolve(xhr.responseText);
+                    } else {
+                        // 处理异常的情况
+                        reject('服务器错误');
+                    }
+                };
+                xhr.open('get', url);
+                xhr.send(null);
+            });
+            return p;
+        }
+        // queryData('http://localhost:3000/data')
+        //     .then(function(data){
+        //         console.log(data);
+        //     }, function(info){
+        //         console.log(info);
+        //     })
+
+        // 发送多次ajax请求，并且保证顺序
+        queryData('http://localhost:3000/data')
+            .then(function(data){
+                console.log(data);
+                // 继续调用下一个任务
+                return queryData('http://localhost:3000/data1'); // return 的是这次调用的Promise 实例对象    
+            })
+            // 接收第二次调用的返回结果
+            .then(function(data){
+                console.log(data);
+                return queryData('http://localhost:3000/data2'); // return 的是这次调用的Promise 实例对象
+            })
+            // 接收第三次调用的返回结果
+            .then(function(data){
+                console.log(data);
+            })
+    </script>
+</body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <div :style='{fontSize: fontSize + "px"}'>{{ pmsg }}</div>
+        <!-- 接受子组件传递过来的值我们使用的是 $event 这个是固定的 -->
+        <menu-item :parr='parr' @enlarge-text='handle($event)'></menu-item>
+    </div>
+    <script src="./js/vue.js"></script>
+    <script>
+        // 子组件向父组件传值-基本用法
+        // props 传递数据原则：单向数据流
+
+        Vue.component('menu-item', {
+            props: ['parr'],
+            template: `
+                <div>
+                    <ul>
+                        <li :key='index' v-for='(item,index) in parr'>{{ item }}</li>
+                    </ul>
+                    <button @click='parr.push("lemon")'>点击</button>
+                    <button @click='$emit("enlarge-text", 5)'>扩大父组件中字体大小</button>
+                    <button @click='$emit("enlarge-text", 10)'>扩大父组件中字体大小</button>
+                </div>
+            `
+        });
+
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                pmsg: '父组件中内容',
+                parr: ['apple', 'orange', 'banana'],
+                fontSize: 10
+            },
+            methods: {
+                handle: function(val){
+                    // 扩大字体大小
+                    // val是子组件传递过来的
+                    this.fontSize += val;
+                }
+            }
+        });
+    </script>
+</body>
+</html>

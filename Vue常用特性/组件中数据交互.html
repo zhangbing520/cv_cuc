@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <div>{{ pmsg }}</div>
+        // 普通的标签中必须使用短横线命名形式的属性名 不能使用驼峰命名的形式
+        <menu-item :menu-title="ptitle"></menu-item>
+    </div>
+    <script src="./js/vue.js"></script>
+    <script>
+        Vue.component('third-com', {
+            // 组件内部通过 props 接收传递过来的值
+            // props 使用的是驼峰形式 但在模板（html）中需要使用短横线的形式
+            props: ['testTitle'],
+            template: '<div>{{testTitle}}</div>' // 字符串模板中没有这个限制
+        });
+        Vue.component('menu-item', {
+            // 组件内部通过 props 接收传递过来的值
+            // props 使用的是驼峰形式 但在模板（html）中需要使用短横线的形式
+            props: ['menuTitle'],
+            template: '<div>{{menuTitle}}<third-com testTitle="hello"></third-com></div>' // 字符串模板中没有这个限制
+        });
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                pmsg: '父组件中内容',
+                ptitle: '动态绑定属性'
+            },
+        })
+    </script>
+    
+</body>
+</html>

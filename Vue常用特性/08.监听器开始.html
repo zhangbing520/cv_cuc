@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <div>
+            <span>名:</span>
+            <span>
+                <input type="text" v-model='firstname'>
+            </span>
+        </div>
+        <div>
+            <span>姓:</span>
+            <span>
+                <input type="text" v-model='lastname'>
+            </span>
+        </div>
+        <div>{{ fullname }}</div>
+    </div>
+
+    <script src="./js/vue.js"></script>
+    <script>
+        // 监听器
+        // 监听器的使用场景：数据变化时执行异步或开销较大的操作
+
+        var vm = new Vue( {
+            el:'#app',
+            data: {
+                firstname: 'Jim',
+                lastname: 'Green',
+                // fullname: 'Jim Green',
+            },
+            methods: {
+
+            },
+            watch: {
+                // 使用监听器实现
+                // val 表示变化之后的值
+                // firstname: function(val) {
+                //     this.fullname = val + '  ' + this.lastname;
+                // },
+                // lastname: function (val) {
+                //     this.fullname = this.firstname + ' ' + val;
+                // }
+            },
+            // 计算属性也可以实现
+            computed: {
+                fullname: function(){
+                    return this.firstname + '  ' + this.lastname;
+                }
+            }
+
+        })
+    </script>
+</body>
+</html>

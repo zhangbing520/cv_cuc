@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <div>
+            <span>用户名：</span>
+            <span>
+                <input type="text" v-model.lazy='uname'>
+            </span>
+            <span>{{ tip }}</span>
+        </div>
+    </div>
+
+    <script src="./js/vue.js"></script>
+    <script>
+        // 监听器的使用场景
+        // 1. 采用监听器监听用户名的变化
+        // 2. 调用后台接口进行验证
+        // 3. 根据验证的结果调整提示信息
+        // 4. 需要修改触发事件的事件
+
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                uname: '',
+                tip: '',
+            },
+            methods: {
+                checkName: function (uname) {
+                    // 调用接口,但是可以使用定时任务的方式模拟接口调用
+                    var that = this;
+                    setTimeout(function(){
+                        // 模拟接口调用
+                        if (uname == 'admin') {
+                            that.tip = '用户名已存在，请更换';
+                        } else {
+                            that.tip = '用户名可以使用';
+                        }
+                    }, 2000)
+                }
+            },
+            watch: {
+                uname: function(val){
+                    // 调用后台接口验证用户名的合法性
+                    this.checkName(val);
+                    // 修改提示信息
+                    this.tip = '正在验证...';
+                }
+            }
+
+        })
+    </script>
+</body>
+</html>

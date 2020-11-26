@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // 基于Promise发送Ajax请求
+        function queryData(url) {
+            // return 返回的是一个Promise实例对象 返回的该实例对象会调用下一个 then
+            return p = new Promise(function(resolve, reject){
+                var xhr = new XMLHttpRequest();
+                xhr.onreadystatechange = function(){
+                    if(xhr.readyState != 4) return;
+                    if(xhr.readyState == 4 && xhr.status == 200) {
+                        // 处理正常的情况
+                        resolve(xhr.responseText);
+                    } else {
+                        // 处理异常的情况
+                        reject('服务器错误');
+                    }
+                };
+                xhr.open('get', url);
+                xhr.send(null);
+            });
+        }
+
+        // return 返回的是一个Promise实例对象 返回的该实例对象会调用下一个 then
+        queryData('http://localhost:3000/data')
+            .then(function(data){
+                return queryData('http://localhost:3000/data1'); // 返回的是Promise实例对象 
+            })
+            .then(function(data){
+                // 返回的是Promise实例对象 
+                return new Promise(function(resolve, reject){
+                    setTimeout(function(){
+                        resolve(123);
+                    },1000)
+                });
+            })
+            .then(function(data){
+                return 'hello';
+            }) 
+            // 上一个 then 中 返回的是具体的值 下一个then可以直接得到 return 的具体的值
+            .then(function(data){
+                console.log(data);
+            })
+
+    </script>
+</body>
+</html>

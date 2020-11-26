@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // Promise 常用的API-实例方法
+        // console.log(Promise);
+        function foo(){
+            // 返回的是 Promise 实例对象
+            return new Promise(function(resolve, reject){
+                setTimeout(function(){
+                    // resolve(123);
+                    reject('error');
+                },100);
+            })
+        }
+
+        // 实例对象调用实例对象的方法
+        foo()
+            .then(function(data){
+                console.log(data)
+            }, function(data){
+                console.log(data)
+            })
+            .finally(function(){
+                console.log('finish');
+            });
+    </script>
+    
+</body>
+</html>
